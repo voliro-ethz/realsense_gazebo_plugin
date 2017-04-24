@@ -31,7 +31,7 @@ void GazeboRosRealsense::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
   RealSensePlugin::Load(_model, _sdf);
 
-  this->rosnode_ = new ros::NodeHandle("/realsense");
+  this->rosnode_ = new ros::NodeHandle("");
 
   // initialize camera_info_manager
   this->camera_info_manager_.reset(
@@ -39,10 +39,10 @@ void GazeboRosRealsense::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
   this->itnode_ = new image_transport::ImageTransport(*this->rosnode_);
 
-  this->color_pub_ = this->itnode_->advertise("camera/color/image_raw", 2);
-  this->ir1_pub_ = this->itnode_->advertise("camera/ir/image_raw", 2);
-  this->ir2_pub_ = this->itnode_->advertise("camera/ir2/image_raw", 2);
-  this->depth_pub_ = this->itnode_->advertise("camera/depth/image_raw", 2);
+  this->color_pub_ = this->itnode_->advertise("rgb/image_raw", 2);
+//  this->ir1_pub_ = this->itnode_->advertise("camera/ir/image_raw", 2);
+//  this->ir2_pub_ = this->itnode_->advertise("camera/ir2/image_raw", 2);
+  this->depth_pub_ = this->itnode_->advertise("depth/image_raw", 2);
 }
 
 /////////////////////////////////////////////////
@@ -59,16 +59,16 @@ void GazeboRosRealsense::OnNewFrame(const rendering::CameraPtr cam,
     camera_id = COLOR_CAMERA_NAME;
     image_pub = &(this->color_pub_);
   }
-  else if (camera_id.find(IRED1_CAMERA_NAME) != std::string::npos)
-  {
-    camera_id = IRED1_CAMERA_NAME;
-    image_pub = &(this->ir1_pub_);
-  }
-  else if (camera_id.find(IRED2_CAMERA_NAME) != std::string::npos)
-  {
-    camera_id = IRED2_CAMERA_NAME;
-    image_pub = &(this->ir2_pub_);
-  }
+//  else if (camera_id.find(IRED1_CAMERA_NAME) != std::string::npos)
+//  {
+//    camera_id = IRED1_CAMERA_NAME;
+//    image_pub = &(this->ir1_pub_);
+//  }
+//  else if (camera_id.find(IRED2_CAMERA_NAME) != std::string::npos)
+//  {
+//    camera_id = IRED2_CAMERA_NAME;
+//    image_pub = &(this->ir2_pub_);
+//  }
   else
   {
     ROS_ERROR("Unknown camera name\n");

@@ -21,13 +21,13 @@
 
 #define DEPTH_PUB_FREQ_HZ 60
 #define COLOR_PUB_FREQ_HZ 60
-#define IRED1_PUB_FREQ_HZ 60
-#define IRED2_PUB_FREQ_HZ 60
+//#define IRED1_PUB_FREQ_HZ 60
+//#define IRED2_PUB_FREQ_HZ 60
 
 #define DEPTH_CAMERA_TOPIC "depth"
 #define COLOR_CAMERA_TOPIC "color"
-#define IRED1_CAMERA_TOPIC "infrared"
-#define IRED2_CAMERA_TOPIC "infrared2"
+//#define IRED1_CAMERA_TOPIC "infrared"
+//#define IRED2_CAMERA_TOPIC "infrared2"
 
 #define DEPTH_NEAR_CLIP_M 0.3
 #define DEPTH_FAR_CLIP_M 10.0
@@ -39,8 +39,8 @@ using namespace gazebo;
 RealSensePlugin::RealSensePlugin()
 {
   this->depthCam = nullptr;
-  this->ired1Cam = nullptr;
-  this->ired2Cam = nullptr;
+//  this->ired1Cam = nullptr;
+//  this->ired2Cam = nullptr;
   this->colorCam = nullptr;
 }
 
@@ -70,12 +70,12 @@ void RealSensePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
   this->depthCam =
       std::dynamic_pointer_cast<sensors::DepthCameraSensor>(
           smanager->GetSensor(DEPTH_CAMERA_NAME))->DepthCamera();
-  this->ired1Cam = std::dynamic_pointer_cast<sensors::CameraSensor>(
-                                smanager->GetSensor(IRED1_CAMERA_NAME))
-                                ->Camera();
-  this->ired2Cam = std::dynamic_pointer_cast<sensors::CameraSensor>(
-                                smanager->GetSensor(IRED2_CAMERA_NAME))
-                                ->Camera();
+//  this->ired1Cam = std::dynamic_pointer_cast<sensors::CameraSensor>(
+//                                smanager->GetSensor(IRED1_CAMERA_NAME))
+//                                ->Camera();
+//  this->ired2Cam = std::dynamic_pointer_cast<sensors::CameraSensor>(
+//                                smanager->GetSensor(IRED2_CAMERA_NAME))
+//                                ->Camera();
   this->colorCam = std::dynamic_pointer_cast<sensors::CameraSensor>(
                                 smanager->GetSensor(COLOR_CAMERA_NAME))
                                 ->Camera();
@@ -87,18 +87,18 @@ void RealSensePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
               << std::endl;
     return;
   }
-  if (!this->ired1Cam)
-  {
-    std::cerr << "RealSensePlugin: InfraRed Camera 1 has not been found"
-              << std::endl;
-    return;
-  }
-  if (!this->ired2Cam)
-  {
-    std::cerr << "RealSensePlugin: InfraRed Camera 2 has not been found"
-              << std::endl;
-    return;
-  }
+//  if (!this->ired1Cam)
+//  {
+//    std::cerr << "RealSensePlugin: InfraRed Camera 1 has not been found"
+//              << std::endl;
+//    return;
+//  }
+//  if (!this->ired2Cam)
+//  {
+//    std::cerr << "RealSensePlugin: InfraRed Camera 2 has not been found"
+//              << std::endl;
+//    return;
+//  }
   if (!this->colorCam)
   {
     std::cerr << "RealSensePlugin: Color Camera has not been found"
@@ -128,10 +128,10 @@ void RealSensePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
   this->depthPub = this->transportNode->Advertise<msgs::ImageStamped>(
           rsTopicRoot + DEPTH_CAMERA_TOPIC, 1, DEPTH_PUB_FREQ_HZ);
-  this->ired1Pub = this->transportNode->Advertise<msgs::ImageStamped>(
-          rsTopicRoot + IRED1_CAMERA_TOPIC, 1, DEPTH_PUB_FREQ_HZ);
-  this->ired2Pub = this->transportNode->Advertise<msgs::ImageStamped>(
-          rsTopicRoot + IRED2_CAMERA_TOPIC, 1, DEPTH_PUB_FREQ_HZ);
+//  this->ired1Pub = this->transportNode->Advertise<msgs::ImageStamped>(
+//          rsTopicRoot + IRED1_CAMERA_TOPIC, 1, DEPTH_PUB_FREQ_HZ);
+//  this->ired2Pub = this->transportNode->Advertise<msgs::ImageStamped>(
+//          rsTopicRoot + IRED2_CAMERA_TOPIC, 1, DEPTH_PUB_FREQ_HZ);
   this->colorPub = this->transportNode->Advertise<msgs::ImageStamped>(
           rsTopicRoot + COLOR_CAMERA_TOPIC, 1, DEPTH_PUB_FREQ_HZ);
 
@@ -139,15 +139,15 @@ void RealSensePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
   this->newDepthFrameConn = this->depthCam->ConnectNewDepthFrame(
       std::bind(&RealSensePlugin::OnNewDepthFrame, this));
 
-  this->newIred1FrameConn =
-      this->ired1Cam->ConnectNewImageFrame(
-          std::bind(&RealSensePlugin::OnNewFrame, this, this->ired1Cam,
-                    this->ired1Pub));
+//  this->newIred1FrameConn =
+//      this->ired1Cam->ConnectNewImageFrame(
+//          std::bind(&RealSensePlugin::OnNewFrame, this, this->ired1Cam,
+//                    this->ired1Pub));
 
-  this->newIred2FrameConn =
-      this->ired2Cam->ConnectNewImageFrame(
-          std::bind(&RealSensePlugin::OnNewFrame, this, this->ired2Cam,
-                    this->ired2Pub));
+//  this->newIred2FrameConn =
+//      this->ired2Cam->ConnectNewImageFrame(
+//          std::bind(&RealSensePlugin::OnNewFrame, this, this->ired2Cam,
+//                    this->ired2Pub));
 
   this->newColorFrameConn =
       this->colorCam->ConnectNewImageFrame(

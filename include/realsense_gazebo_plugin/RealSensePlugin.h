@@ -33,8 +33,8 @@ namespace gazebo
 
   #define DEPTH_CAMERA_NAME "depth"
   #define COLOR_CAMERA_NAME "color"
-  #define IRED1_CAMERA_NAME "ired1"
-  #define IRED2_CAMERA_NAME "ired2"
+  // #define IRED1_CAMERA_NAME "ired1"
+  // #define IRED2_CAMERA_NAME "ired2"
 
   /// \brief A plugin that simulates Real Sense camera streams.
   class RealSensePlugin : public ModelPlugin
@@ -74,10 +74,10 @@ namespace gazebo
     protected: rendering::CameraPtr colorCam;
 
     /// \brief Pointer to the Infrared Camera Renderer.
-    protected: rendering::CameraPtr ired1Cam;
+    // protected: rendering::CameraPtr ired1Cam;
 
     /// \brief Pointer to the Infrared2 Camera Renderer.
-    protected: rendering::CameraPtr ired2Cam;
+    // protected: rendering::CameraPtr ired2Cam;
 
     /// \brief Pointer to the transport Node.
     protected: transport::NodePtr transportNode;
@@ -92,19 +92,19 @@ namespace gazebo
     protected: transport::PublisherPtr colorPub;
 
     /// \brief Pointer to the Infrared Publisher.
-    protected: transport::PublisherPtr ired1Pub;
+    // protected: transport::PublisherPtr ired1Pub;
 
     /// \brief Pointer to the Infrared2 Publisher.
-    protected: transport::PublisherPtr ired2Pub;
+    // protected: transport::PublisherPtr ired2Pub;
 
     /// \brief Pointer to the Depth Camera callback connection.
     protected: event::ConnectionPtr newDepthFrameConn;
 
     /// \brief Pointer to the Depth Camera callback connection.
-    protected: event::ConnectionPtr newIred1FrameConn;
+    // protected: event::ConnectionPtr newIred1FrameConn;
 
     /// \brief Pointer to the Infrared Camera callback connection.
-    protected: event::ConnectionPtr newIred2FrameConn;
+    // protected: event::ConnectionPtr newIred2FrameConn;
 
     /// \brief Pointer to the Color Camera callback connection.
     protected: event::ConnectionPtr newColorFrameConn;
